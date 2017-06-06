@@ -8,7 +8,7 @@ i2c *eeBus;                                   // I2C bus ID
 void setupServoController(const i2c *eeBus);
 void setServo(const i2c *eeBus, long start, long stop);
 
-int main()                                    // Main function
+int main()
 {
   eeBus = i2c_newbus(28,  29,   0);           // Set up I2C bus, get bus ID
   setupServoController(eeBus);

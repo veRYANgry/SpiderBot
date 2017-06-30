@@ -8,17 +8,56 @@ i2c *eeBus;
 void setupServoController(const i2c *eeBus);
 void setServoAmount(const i2c *eeBus, uint16_t rotation, uint8_t location);
 
+// Servo location constants from the tail as the back looking down.
+#define kServoLocationFrontRightTip 0
+#define kServoLocationFrontRightMiddle 1
+#define kServoLocationFrontRightBase 2
+
+#define kServoLocationFrontLeftTip 3
+#define kServoLocationFrontLeftMiddle  4
+#define kServoLocationFrontLeftBase 5
+
+#define kServoLocationBackRightTip 6
+#define kServoLocationBackRightMiddle 7
+#define kServoLocationBackRightBase 8
+
+#define kServoLocationBackLeftTip 9
+#define kServoLocationBackLeftMiddle 10
+#define kServoLocationBackLeftBase 11
+// Offset array for calibration of servos
+ const int8_t kServoOffsetArray[] = 
+{[kServoLocationFrontRightTip] = 0,
+  [kServoLocationFrontRightMiddle]= 0,
+  [kServoLocationFrontRightBase] = 0,
+  [kServoLocationFrontLeftTip] = 0,
+  [kServoLocationFrontLeftMiddle] = 0,
+  [kServoLocationFrontLeftBase] = 0,
+  [kServoLocationBackRightTip] = 0,
+  [kServoLocationBackRightMiddle] = 0,
+  [kServoLocationBackRightBase] = 0,
+  [kServoLocationBackLeftTip] = 0,
+  [kServoLocationBackLeftMiddle] = -40,
+  [kServoLocationBackLeftBase] = 0};
+  
+   const int8_t kServoWidenArray[] = 
+{[kServoLocationFrontRightTip] = 0,
+  [kServoLocationFrontRightMiddle]= 0,
+  [kServoLocationFrontRightBase] = 0,
+  [kServoLocationFrontLeftTip] = 0,
+  [kServoLocationFrontLeftMiddle] = 0,
+  [kServoLocationFrontLeftBase] = 0,
+  [kServoLocationBackRightTip] = 0,
+  [kServoLocationBackRightMiddle] = 0,
+  [kServoLocationBackRightBase] = 0,
+  [kServoLocationBackLeftTip] = 0,
+  [kServoLocationBackLeftMiddle] = 200,
+  [kServoLocationBackLeftBase] = 0};
+  
 int main()
 {
   eeBus = i2c_newbus(28,  29,   0); // Set up I2C bus
   setupServoController(eeBus);
-  while(1){ // Test code
-    for(int counter = 0;counter <= 180;counter += 1){
-      setServoAmount(eeBus, counter, 0);
-      setServoAmount(eeBus, (counter + 90) % 180, 1);
-      sleep(1); 
-    }
-  }     
+  setServoAmount(eeBus, 90, kServoLocationBackLeftMiddle);
 }
 
 // Setup the servo controller PCA9685 with Auto increment and a 50 hz freq.
@@ -52,8 +91,7 @@ void setServoAmount(const i2c *eeBus, uint16_t rotation, uint8_t location){
   const int max = 540;
   const int min = 110;
   const uint16_t startLocation = 0;
-  uint16_t stopLocation = (rotation * (max - min)) / 180 + min;
-  print("counter = %d \n", stopLocation);
+  uint16_t stopLocation = ((rotation + kServoOffsetArray[location])* (max - min - kServoWidenArray[location]) ) / 180 + min;
   i2c_out(eeBus, 0x40, startRegister, 1, &startLocation, sizeof(startLocation));  // On pwm.
   i2c_out(eeBus, 0x40, stopRegister, 1, &stopLocation, sizeof(stopLocation));  // Off pwm.  
 }  

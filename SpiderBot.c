@@ -25,7 +25,7 @@ void setServoAmount(const i2c *eeBus, uint16_t rotation, uint8_t location);
 #define kServoLocationBackLeftMiddle 10
 #define kServoLocationBackLeftBase 11
 // Offset array for calibration of servos
- const int8_t kServoOffsetArray[] = 
+ int16_t kServoMinSetArray[] = 
 {[kServoLocationFrontRightTip] = 0,
   [kServoLocationFrontRightMiddle]= 0,
   [kServoLocationFrontRightBase] = 0,
@@ -36,10 +36,10 @@ void setServoAmount(const i2c *eeBus, uint16_t rotation, uint8_t location);
   [kServoLocationBackRightMiddle] = 0,
   [kServoLocationBackRightBase] = 0,
   [kServoLocationBackLeftTip] = 0,
-  [kServoLocationBackLeftMiddle] = -40,
+  [kServoLocationBackLeftMiddle] = 0,
   [kServoLocationBackLeftBase] = 0};
   
-   const int8_t kServoWidenArray[] = 
+   int16_t kServoMaxSetArray[] = 
 {[kServoLocationFrontRightTip] = 0,
   [kServoLocationFrontRightMiddle]= 0,
   [kServoLocationFrontRightBase] = 0,
@@ -50,14 +50,23 @@ void setServoAmount(const i2c *eeBus, uint16_t rotation, uint8_t location);
   [kServoLocationBackRightMiddle] = 0,
   [kServoLocationBackRightBase] = 0,
   [kServoLocationBackLeftTip] = 0,
-  [kServoLocationBackLeftMiddle] = 200,
+  [kServoLocationBackLeftMiddle] = 0,
   [kServoLocationBackLeftBase] = 0};
   
 int main()
 {
   eeBus = i2c_newbus(28,  29,   0); // Set up I2C bus
   setupServoController(eeBus);
-  setServoAmount(eeBus, 90, kServoLocationBackLeftMiddle);
+  while(1){   
+    int maxServoSetting, minServoSetting, location;
+    print("Enter min max location: ");
+    scan("%d %d %d\n", &minServoSetting, &maxServoSetting, &location);
+    kServoMaxSetArray[location] = maxServoSetting;
+    kServoMinSetArray[location] = minServoSetting;
+    setServoAmount(eeBus, 0, location);
+    sleep(2);
+    setServoAmount(eeBus, 180, location);
+    }  
 }
 
 // Setup the servo controller PCA9685 with Auto increment and a 50 hz freq.
@@ -88,10 +97,10 @@ void setServoAmount(const i2c *eeBus, uint16_t rotation, uint8_t location){
   location %= 16; // Do not allow access out of bounds.
   uint8_t startRegister = 0x06 + 0x04 * location;
   uint8_t stopRegister = 0x08 + 0x04 * location;
-  const int max = 540;
-  const int min = 110;
+  int max = 540 + kServoMaxSetArray[location];
+  int min = 110 + kServoMinSetArray[location];
   const uint16_t startLocation = 0;
-  uint16_t stopLocation = ((rotation + kServoOffsetArray[location])* (max - min - kServoWidenArray[location]) ) / 180 + min;
+  uint16_t stopLocation = (rotation * (max - min) ) / 180 + min;
   i2c_out(eeBus, 0x40, startRegister, 1, &startLocation, sizeof(startLocation));  // On pwm.
   i2c_out(eeBus, 0x40, stopRegister, 1, &stopLocation, sizeof(stopLocation));  // Off pwm.  
 }  

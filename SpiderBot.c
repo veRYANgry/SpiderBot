@@ -8,7 +8,8 @@ i2c *eeBus;
 void setupServoController(const i2c *eeBus);
 void setServoAmount(const i2c *eeBus, uint16_t rotation, uint8_t location);
 void interpolateServo(const i2c *eeBus, float time,uint16_t startPosition , uint16_t endPosition, uint8_t location);
-
+void moveServoArm(float x, float y, uint8_t location, uint8_t isUp);
+uint16_t invert(uint16_t position, uint8_t invert);
 // Servo location constants from the tail as the back looking down.
 #define kServoLocationFrontRightTip 0
 #define kServoLocationFrontRightMiddle 1
@@ -31,6 +32,17 @@ void interpolateServo(const i2c *eeBus, float time,uint16_t startPosition , uint
 #define kServoLegFrontLeft 1
 #define kServoLegBackRight 2
 #define kServoLegBackLeft 3
+
+#define tipOffset  0
+#define middleOffset  1
+#define baseOffset  2
+
+ uint16_t kServoInversionArray[] = 
+ { [kServoLegFrontRight] = 0,
+ [kServoLegFrontLeft] = 1,
+ [kServoLegBackRight] = 1,
+ [kServoLegBackLeft] = 0
+ };
 
 // Offset array for calibration of servos.
  int16_t kServoMinSetArray[] = 
@@ -65,29 +77,19 @@ int main()
 {
   eeBus = i2c_newbus(28,  29,   0); // Set up I2C bus
   setupServoController(eeBus);
-    //scan("%d %d %d\n", &minServoSetting, &maxServoSetting, &location);
-  setServoAmount(eeBus, 60, kServoLocationFrontRightMiddle);
-  setServoAmount(eeBus, 120, kServoLocationBackRightMiddle);
-  setServoAmount(eeBus, 120, kServoLocationFrontLeftMiddle);
-  setServoAmount(eeBus, 60, kServoLocationBackLeftMiddle);
-  
-  setServoAmount(eeBus, 90, kServoLocationFrontRightTip);
-  setServoAmount(eeBus,180 - 90, kServoLocationBackRightTip);
-  setServoAmount(eeBus, 180 - 90, kServoLocationFrontLeftTip);
-  setServoAmount(eeBus, 90, kServoLocationBackLeftTip);
+    //scan("%d %d %d\n", &minServoSetting, &maxServoSetting, &location)
   
   while(1){
-    setServoAmount(eeBus, 10, kServoLocationFrontRightBase);
-    setServoAmount(eeBus, 10, kServoLocationBackRightBase);
-    setServoAmount(eeBus, 10, kServoLocationFrontLeftBase);
-    setServoAmount(eeBus, 10, kServoLocationBackLeftBase);
+    moveServoArm(1,0, kServoLegFrontRight,0);
+    moveServoArm(1,0, kServoLegFrontLeft,0);
+    moveServoArm(1,0, kServoLegBackRight,0);
+    moveServoArm(1,0, kServoLegBackLeft,0);
     sleep(1);
-    setServoAmount(eeBus, 140, kServoLocationFrontRightBase);
-    setServoAmount(eeBus, 140, kServoLocationBackRightBase);
-    setServoAmount(eeBus, 140, kServoLocationFrontLeftBase);
-    setServoAmount(eeBus, 140, kServoLocationBackLeftBase);
+    moveServoArm(0,1, kServoLegFrontRight,0);
+    moveServoArm(0,1, kServoLegFrontLeft,0);
+    moveServoArm(0,1, kServoLegBackRight,0);
+    moveServoArm(0,1, kServoLegBackLeft,0);
     sleep(1);
-    print("Test, %d", kServoMaxSetArray[0]);
   }    
  
 }
@@ -134,3 +136,26 @@ void setServoAmount(const i2c *eeBus, uint16_t rotation, uint8_t location){
 void interpolateServo(const i2c *eeBus, float time, uint16_t startPosition , uint16_t endPosition, uint8_t location){
   setServoAmount(  eeBus, time * endPosition + (time - 1) * startPosition, location);
 }
+
+uint16_t invert(uint16_t position, uint8_t invert){
+  if(invert){
+    return 180 - position;
+  } else {
+    return position;
+  }        
+}  
+
+void moveServoArm(float x, float y, uint8_t location, uint8_t isUp){
+  if(isUp){
+      setServoAmount(  eeBus,invert(10, kServoInversionArray[location] * 180), location * 3 + tipOffset);
+  } else {
+    setServoAmount(  eeBus,invert(150, kServoInversionArray[location] * 180), location * 3 + tipOffset);
+  }
+  
+  float rotation;
+  if(x == 0){
+    rotation = 90;
+  }    
+  rotation = atan(y/x);
+  setServoAmount(  eeBus,invert(rotation, kServoInversionArray[location]), location * 3 + middleOffset);
+}  

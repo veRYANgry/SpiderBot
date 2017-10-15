@@ -17,6 +17,7 @@ ServoController::~ServoController() {
 }
 
 // Connect to the servo controller at the specified address.
+// @param address The location of the servo device on the i2c bus.
 void ServoController::connectToAddress(int address){
 	int servoConterollerFD = wiringPiI2CSetup(address);
 	if(servoConterollerFD == -1){

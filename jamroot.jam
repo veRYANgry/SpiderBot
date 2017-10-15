@@ -1,0 +1,36 @@
+import python ;
+
+if ! [ python.configured ]
+{
+    ECHO "notice: no Python configured in user-config.jam" ;
+    ECHO "notice: will use default configuration" ;
+    using python ;
+}
+
+
+using gcc ;
+# Specify the path to the Boost project.  If you move this project,
+# adjust this path to refer to the Boost root directory.
+use-project boost
+  : /usr/share/boost-build/;
+
+# Set up the project-wide requirements that everything uses the
+# boost_python library from the project whose global ID is
+# /boost/python.
+project
+  : requirements <library>/boost/python//boost_python 
+                 <implicit-dependency>/boost//headers 
+  : usage-requirements <implicit-dependency>/boost//headers 
+  ;
+
+# Declare the three extension modules.  You can specify multiple
+# source files after the colon separated by spaces.
+python-extension ServoController_ext : ServoController.cpp ;
+
+# Put the extension and Boost.Python DLL in the current directory, so
+# that running script by hand works.
+install convenient_copy 
+  : ServoController_ext 
+  : <install-dependencies>on <install-type>SHARED_LIB <install-type>PYTHON_EXTENSION 
+    <location>. 
+  ;

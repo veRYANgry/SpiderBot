@@ -42,15 +42,15 @@ public:
 	virtual ~ServoController();
 	void connectToAddress(int address);
 	void setupServoController();
-	void setServoAmount(float rotation, servoLocation location);
+	void setServoAmount(float rotation, int location);
 private:
 	int servoConterollerFD;
 
 	// Offset array for calibration of servos.
-	int kServoMinSetArray[12] { 0,100,100,0,0,0,0,0,0,0,100,100};
+	int kServoMinSetArray[12] {0,200,100,0,0,0,0,0,20,0,200,100};
 
 	// Offset array for calibration of servos.
-	int kServoMaxSetArray[12] {0,0,0,0,-240,-150,0,-190,-200,0,-10,-50};
+	int kServoMaxSetArray[12] {-100,0,-100,0,-280,-280,0,-240,-200,0,-10,-50};
 
 };
 

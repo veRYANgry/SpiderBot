@@ -7,7 +7,7 @@
 using namespace boost::python;
 
 
-BOOST_PYTHON_MODULE(servo){
+BOOST_PYTHON_MODULE(ServoController){
 	class_<ServoController>("ServoController")
 			.def("connectToAddress", &ServoController::connectToAddress)
 			.def("setupServoController", &ServoController::setupServoController)

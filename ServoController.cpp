@@ -45,13 +45,13 @@ void ServoController::setupServoController(){
 // Set the servo from 0 to 180 degrees.
 // @param rotation 0 to 180 corresponding to 0 and 180 degrees.
 // @param location 0 to 15 corresponding to the servo slot.
-void ServoController::setServoAmount(float rotation, servoLocation location) {
+void ServoController::setServoAmount(float rotation, int location) {
 	int startRegister = 0x06 + 0x04 * location;
 	int stopRegister = 0x08 + 0x04 * location;
 	int max = 637 + kServoMaxSetArray[location]; // 50 hz with min 1ms max 2ms
 	int min = 217 + kServoMinSetArray[location];
 	const int startLocation = 0;
-	int stopLocation = (rotation * (max - min)) / 180 + min;
+	int stopLocation = (rotation * (max - min)) / 180.0 + min;
 	wiringPiI2CWriteReg16(servoConterollerFD,startRegister,startLocation);// On pwm.
 	wiringPiI2CWriteReg16(servoConterollerFD,stopRegister,stopLocation);// Off pwm.
 }

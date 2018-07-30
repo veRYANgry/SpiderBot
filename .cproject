@@ -33,16 +33,19 @@
 								<option id="gnu.cpp.compiler.option.include.paths.563688267" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="/home/veryangry/rpi/wiringPi/wiringPi"/>
 								</option>
-								<option id="gnu.cpp.compiler.option.other.other.1239149985" superClass="gnu.cpp.compiler.option.other.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 -std=c++11" valueType="string"/>
+								<option id="gnu.cpp.compiler.option.other.other.1239149985" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 -std=c++11" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1496610267" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.781797362" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1434258352" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker">
 								<option id="gnu.cpp.link.option.paths.1858649317" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" useByScannerDiscovery="false" valueType="libPaths">
 									<listOptionValue builtIn="false" value="/home/veryangry/rpi/wiringPi"/>
+									<listOptionValue builtIn="false" value="/home/veryangry/rpi"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.840265145" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
 									<listOptionValue builtIn="false" value="wiringPi"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="boost_python-2.7"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="python2.7"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1164443731" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -55,6 +58,37 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.1316146899.327111248" name="ServoController.cpp" rcbsApplicability="disable" resourcePath="ServoController.cpp" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1762388585.1940178434">
+						<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1762388585.1940178434" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1762388585">
+							<option id="gnu.cpp.compiler.option.other.pic.1559247025" name="Position Independent Code (-fPIC)" superClass="gnu.cpp.compiler.option.other.pic" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+							<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1384039889" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+						</tool>
+						<tool customBuildStep="true" id="org.eclipse.cdt.managedbuilder.ui.rcbs.1929259146" name="Resource Custom Build Step">
+							<inputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.inputtype.252828538" name="Resource Custom Build Step Input Type">
+								<additionalInput kind="additionalinputdependency" paths=""/>
+							</inputType>
+							<outputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.outputtype.92730645" name="Resource Custom Build Step Output Type"/>
+						</tool>
+					</fileInfo>
+					<fileInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.1316146899.750751873" name="pythonServoWrapper.cpp" rcbsApplicability="disable" resourcePath="pythonServoWrapper.cpp" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1762388585.158550645;org.eclipse.cdt.managedbuilder.ui.rcbs.18751243">
+						<tool command="g++" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1762388585.158550645" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1762388585">
+							<option id="gnu.cpp.compiler.option.include.paths.1410427588" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+								<listOptionValue builtIn="false" value="/usr/include"/>
+								<listOptionValue builtIn="false" value="/usr/include/python2.7"/>
+								<listOptionValue builtIn="false" value="/home/veryangry/rpi/wiringPi/wiringPi"/>
+							</option>
+							<option id="gnu.cpp.compiler.option.other.other.329690537" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 -std=c++11 -shared " valueType="string"/>
+							<option id="gnu.cpp.compiler.option.other.pic.70862405" name="Position Independent Code (-fPIC)" superClass="gnu.cpp.compiler.option.other.pic" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+							<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.581986604" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+						</tool>
+						<tool command="" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" id="org.eclipse.cdt.managedbuilder.ui.rcbs.18751243" name="Resource Custom Build Step"/>
+						<tool announcement="Invoking: Resource Custom Build Step" command="" customBuildStep="true" id="org.eclipse.cdt.managedbuilder.ui.rcbs.2067952627" name="Resource Custom Build Step">
+							<inputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.inputtype.875633907" name="Resource Custom Build Step Input Type">
+								<additionalInput kind="additionalinputdependency" paths=""/>
+							</inputType>
+							<outputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.outputtype.319846053" name="Resource Custom Build Step Output Type" outputNames=""/>
+						</tool>
+					</fileInfo>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
@@ -111,6 +145,25 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="cdt.managedbuild.config.gnu.cross.exe.release.1058902375.1663323933" name="pythonServoWrapper.cpp" rcbsApplicability="disable" resourcePath="pythonServoWrapper.cpp" toolsToInvoke="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1950239431.341501261">
+						<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1950239431.341501261" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1950239431">
+							<option id="gnu.cpp.compiler.option.include.paths.1849544863" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+								<listOptionValue builtIn="false" value="/home/veryangry/rpi/wiringPi/wiringPi"/>
+								<listOptionValue builtIn="false" value="/usr/include/boost"/>
+							</option>
+							<option id="gnu.cpp.compiler.option.other.other.189089770" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++11 -shared --export-dynamic" valueType="string"/>
+							<option id="gnu.cpp.compiler.option.other.pic.1901221710" name="Position Independent Code (-fPIC)" superClass="gnu.cpp.compiler.option.other.pic" value="true" valueType="boolean"/>
+							<option id="gnu.cpp.compiler.option.optimization.level.1421163599" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+							<option id="gnu.cpp.compiler.option.debugging.level.1456973453" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
+							<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1193723152" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+						</tool>
+						<tool announcement="Invoking: Resource Custom Build Step" command="" customBuildStep="true" id="org.eclipse.cdt.managedbuilder.ui.rcbs.18751243" name="Resource Custom Build Step">
+							<inputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.inputtype.2110610617" name="Resource Custom Build Step Input Type">
+								<additionalInput kind="additionalinputdependency" paths=""/>
+							</inputType>
+							<outputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.outputtype.1004468660" name="Resource Custom Build Step Output Type" outputNames=""/>
+						</tool>
+					</fileInfo>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
@@ -118,21 +171,6 @@
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="Spider.cdt.managedbuild.target.gnu.cross.exe.1217019162" name="Executable" projectType="cdt.managedbuild.target.gnu.cross.exe"/>
-	</storageModule>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.release.1058902375;cdt.managedbuild.config.gnu.cross.exe.release.1058902375.;cdt.managedbuild.tool.gnu.cross.cpp.compiler.1950239431;cdt.managedbuild.tool.gnu.cpp.compiler.input.16639535">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.debug.1316146899;cdt.managedbuild.config.gnu.cross.exe.debug.1316146899.;cdt.managedbuild.tool.gnu.cross.c.compiler.381400803;cdt.managedbuild.tool.gnu.c.compiler.input.1638846106">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.release.1058902375;cdt.managedbuild.config.gnu.cross.exe.release.1058902375.;cdt.managedbuild.tool.gnu.cross.c.compiler.150032430;cdt.managedbuild.tool.gnu.c.compiler.input.539886249">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.debug.1316146899;cdt.managedbuild.config.gnu.cross.exe.debug.1316146899.;cdt.managedbuild.tool.gnu.cross.cpp.compiler.1762388585;cdt.managedbuild.tool.gnu.cpp.compiler.input.1496610267">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
@@ -145,4 +183,14 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="org.eclipse.cdt.core.pathentry"/>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.debug.1316146899;cdt.managedbuild.config.gnu.cross.exe.debug.1316146899.;cdt.managedbuild.tool.gnu.cross.c.compiler.381400803;cdt.managedbuild.tool.gnu.c.compiler.input.1638846106">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.config.gnu.cross.exe.debug.1316146899;cdt.managedbuild.config.gnu.cross.exe.debug.1316146899.;cdt.managedbuild.tool.gnu.cross.cpp.compiler.1762388585;cdt.managedbuild.tool.gnu.cpp.compiler.input.1496610267">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+	</storageModule>
 </cproject>

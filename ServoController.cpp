@@ -48,8 +48,8 @@ void ServoController::setupServoController(){
 void ServoController::setServoAmount(float rotation, servoLocation location) {
 	int startRegister = 0x06 + 0x04 * location;
 	int stopRegister = 0x08 + 0x04 * location;
-	int max = 530 + kServoMaxSetArray[location];
-	int min = 110 + kServoMinSetArray[location];
+	int max = 637 + kServoMaxSetArray[location]; // 50 hz with min 1ms max 2ms
+	int min = 217 + kServoMinSetArray[location];
 	const int startLocation = 0;
 	int stopLocation = (rotation * (max - min)) / 180 + min;
 	wiringPiI2CWriteReg16(servoConterollerFD,startRegister,startLocation);// On pwm.

@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -lwiringPi
+LIBS := -lwiringPi -lboost_python-2.7 -lpython2.7
 
